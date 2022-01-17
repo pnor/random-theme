@@ -1,0 +1,7 @@
+#+TITLE:   Random Theme
+#+DATE:    January 16, 2022
+#+SINCE:   <replace with next tagged release version>
+#+STARTUP: inlineimages nofold
+
+* Description
+A kind of messy package that randomizes the syntax theme when =random-theme-set-theme= is called.
