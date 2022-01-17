@@ -1,54 +1,5 @@
 ;;; local_packages/random-theme/random-theme.el -*- lexical-binding: t; -*-
 
-;; Colors to use
-;; primary: (blues)
-;; - for function names and stuff
-;; secondary: (yellow)
-;; - warnings
-;; tertiary: (whites)
-;; - basic text, variable names, the large content sections
-;;
-;; how to modify faces?
-;; let the base one be the most vibrant example of it
-;; -- some for differentiating different importance items --
-;; PRIMARY
-;; base
-;; 1 darker (dark blue from blue)
-;; 1 faint (for comments)
-;; ~ 1 bit fainter (for font-lock-comment-delimiter-face)
-;;
-;; TERTIARY
-;; base (for negation char, )
-;; - 1 slightly fainter for most default text
-
-
-;; Faces to control:
-;;
-;; Font Lock Suite
-;;
-;;
-
-;; TODO
-;; - start by just changing a bunch of faces based on 3 provided colors
-;; - add ability to specify groups of faces to use certain colors
-;; - add func to modify the base colors lsighyly on different colors
-
-
-;; ===== Base =====
-;; (219°, 67%, 93%) #4e85ed : primary
-;; (234°, 67%, 93%) #4e5eed : primary darker
-;; (218°, 21%, 73%) #93a1ba : faint, for readable docs
-;; (219°, 51%, 69%) #5675b0 : faint, font-lock comment face
-;; (206°, 85%, 66%) #5eb2f2 : highlight
-;;
-;; ===== Tertiary =====
-;; (43°, 47%, 99%) #FDDC87 : warning
-;;
-;; ===== Secondary =====
-;; (0°, 0%, 87%) #dddddd : base
-;; (0°, 0%, 67%) #AAAAAA : base lighter
-;;
-
 (cl-defstruct (random-theme-face-groups
                (:constructor random-theme-face-groups-create)
                (:copier copy-random-theme-face-groups))
@@ -131,31 +82,23 @@
      (random-theme-face-groups-secondary-faces-faint face-groups))
     (mapc
      (lambda (face) (set-face-attribute face nil :foreground secondary-mid))
-     (random-theme-face-groups-secondary-faces-mid face-groups))
-    ))
+     (random-theme-face-groups-secondary-faces-mid face-groups))))
 
-
-(random-theme-set-faces-colors "#ed854e" "#8AAAAA" "#aa00aa"  face-groups)
-
-
-(random-theme-set-faces-colors "#4e85ed" "#AAAAAA" "#ffff00"  face-groups)
-
-
+;;;### autoload
 (defun random-theme-set-theme ()
   (interactive)
   (let* ((base-color (apply #'color-rgb-to-hex
                             (apply #'color-hsl-to-rgb
-                                   `(
-                                     ,(/ (random 360) 360.0) 0.82 0.62))))
-         (secondary "#AAAAAA")
+                                   `(,(/ (random 360) 360.0) 0.82 0.62))))
+         (secondary "#DDDDDD")
          (tertiary (color-complement-hex base-color)))
-    (random-theme-set-faces-colors base-color secondary tertiary face-groups)))
+    (random-theme-set-faces-colors base-color secondary tertiary random-theme-face-groups)))
 
 ;;
 ;; ====================
 ;;
 
-(setq face-groups (random-theme-face-groups-create
+(defvar random-theme-face-groups (random-theme-face-groups-create
                    :base-faces '(font-lock-function-name-face highlight-quoted-quote
                    font-lock-preprocessor-face font-lock-type-face )
                    :base-darker-faces '(font-lock-constant-face highlight-quoted-symbol)
@@ -170,4 +113,4 @@
                    :secondary-faces-faint '(default font-lock-string-face font-lock-keyword-face)
                    :secondary-faces-mid '(font-lock-variable-name-face)))
 
-(random-theme-set-theme)
+(provide 'random-theme)
