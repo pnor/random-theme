@@ -84,12 +84,24 @@
      (lambda (face) (set-face-attribute face nil :foreground secondary-mid))
      (random-theme-face-groups-secondary-faces-mid face-groups))))
 
+(defun random-theme--random-in-range (low high)
+  "Generate random number in range [LOW..HIGH).
+LOW and HIGH should be 0..1"
+  (let* ((high-scaled (* high 100))
+         (low-scaled (* low 100))
+         (random-base (random (round (- high-scaled low-scaled))))
+         (result (/ (+ random-base low-scaled) 100.0)))
+    (print random-base)
+    result))
+
 ;;;### autoload
 (defun random-theme-set-theme ()
   (interactive)
   (let* ((base-color (apply #'color-rgb-to-hex
                             (apply #'color-hsl-to-rgb
-                                   `(,(/ (random 360) 360.0) 0.82 0.62))))
+                                   `(,(/ (random 360) 360.0)
+                                     ,(random-theme--random-in-range 0.6 1.0)
+                                     ,(random-theme--random-in-range 0.6 1.0)))))
          (secondary "#DDDDDD")
          (tertiary (color-complement-hex base-color)))
     (random-theme-set-faces-colors base-color secondary tertiary random-theme-face-groups)))
