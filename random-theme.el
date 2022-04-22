@@ -54,34 +54,33 @@
        (tertiary-color tertiary)
        (secondary-color secondary)
        (secondary-faint (random-theme--modify-color secondary 0 0 -0.2))
-       (secondary-mid (random-theme--modify-color secondary 0 0 -0.07))
-       )
+       (secondary-mid (random-theme--modify-color secondary 0 0 -0.07)))
     (mapc
-     (lambda (face) (set-face-attribute face nil :foreground primary-color))
+     (lambda (face) (if (facep face) (set-face-attribute face nil :foreground primary-color)))
      (random-theme-face-groups-base-faces face-groups))
     (mapc
-     (lambda (face) (set-face-attribute face nil :foreground primary-darker))
+     (lambda (face) (if (facep face) (set-face-attribute face nil :foreground primary-darker)))
      (random-theme-face-groups-base-darker-faces face-groups))
     (mapc
-     (lambda (face) (set-face-attribute face nil :foreground primary-faint))
+     (lambda (face) (if (facep face) (set-face-attribute face nil :foreground primary-faint)))
      (random-theme-face-groups-base-faces-faint face-groups))
     (mapc
-     (lambda (face) (set-face-attribute face nil :foreground primary-fainter))
+     (lambda (face) (if (facep face) (set-face-attribute face nil :foreground primary-fainter)))
      (random-theme-face-groups-base-faces-fainter face-groups))
     (mapc
-     (lambda (face) (set-face-attribute face nil :foreground primary-light))
+     (lambda (face) (if (facep face) (set-face-attribute face nil :foreground primary-light)))
      (random-theme-face-groups-base-faces-light face-groups))
     (mapc
-     (lambda (face) (set-face-attribute face nil :foreground tertiary-color))
+     (lambda (face) (if (facep face) (set-face-attribute face nil :foreground tertiary-color)))
      (random-theme-face-groups-tertiary-faces face-groups))
     (mapc
-     (lambda (face) (set-face-attribute face nil :foreground secondary-color))
+     (lambda (face) (if (facep face) (set-face-attribute face nil :foreground secondary-color)))
      (random-theme-face-groups-secondary-faces face-groups))
     (mapc
-     (lambda (face) (set-face-attribute face nil :foreground secondary-faint))
+     (lambda (face) (if (facep face) (set-face-attribute face nil :foreground secondary-faint)))
      (random-theme-face-groups-secondary-faces-faint face-groups))
     (mapc
-     (lambda (face) (set-face-attribute face nil :foreground secondary-mid))
+     (lambda (face) (if (facep face) (set-face-attribute face nil :foreground secondary-mid)))
      (random-theme-face-groups-secondary-faces-mid face-groups))))
 
 (defun random-theme--random-in-range (low high)
@@ -91,7 +90,6 @@ LOW and HIGH should be 0..1"
          (low-scaled (* low 100))
          (random-base (random (round (- high-scaled low-scaled))))
          (result (/ (+ random-base low-scaled) 100.0)))
-    (print random-base)
     result))
 
 ;;;### autoload
@@ -112,7 +110,7 @@ LOW and HIGH should be 0..1"
 
 (defvar random-theme-face-groups (random-theme-face-groups-create
                    :base-faces '(font-lock-function-name-face highlight-quoted-quote
-                   font-lock-preprocessor-face font-lock-type-face )
+                   font-lock-preprocessor-face font-lock-type-face)
                    :base-darker-faces '(font-lock-constant-face highlight-quoted-symbol)
                    :base-faces-faint '(font-lock-doc-face)
                    :base-faces-fainter '(font-lock-comment-face font-lock-comment-delimiter-face)
