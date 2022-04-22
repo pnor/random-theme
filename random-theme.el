@@ -110,7 +110,7 @@ LOW and HIGH should be 0..1"
 
 (defvar random-theme-face-groups (random-theme-face-groups-create
                    :base-faces '(font-lock-function-name-face highlight-quoted-quote
-                   font-lock-preprocessor-face font-lock-type-face)
+                   font-lock-preprocessor-face font-lock-type-face link)
                    :base-darker-faces '(font-lock-constant-face highlight-quoted-symbol)
                    :base-faces-faint '(font-lock-doc-face)
                    :base-faces-fainter '(font-lock-comment-face font-lock-comment-delimiter-face)
